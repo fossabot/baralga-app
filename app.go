@@ -16,6 +16,7 @@ import (
 	"github.com/go-chi/jwtauth/v5"
 	"github.com/go-http-utils/etag"
 	"github.com/golang-migrate/migrate/v4"
+	_ "github.com/golang-migrate/migrate/v4/database/cockroachdb"
 	_ "github.com/golang-migrate/migrate/v4/database/pgx"
 	"github.com/golang-migrate/migrate/v4/source/iofs"
 	"github.com/gorilla/csrf"
@@ -250,6 +251,7 @@ func migrateDb(dbURL string) error {
 	}
 
 	m, err := migrate.NewWithSourceInstance("iofs", source, strings.Replace(dbURL, "postgres://", "pgx://", 1))
+	// m, err := migrate.NewWithSourceInstance("iofs", source, strings.Replace(dbURL, "postgres://", "cockroach://", 1))
 	if err != nil {
 		return err
 	}
